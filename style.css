@@ -154,6 +154,7 @@ footer{
 
 .home-img img{
     width:280px;
+    height: 280px;
     border-radius:50%;
     border:5px solid #38bdf8;
     transition:opacity 0.5s ease-in-out;
