@@ -152,6 +152,27 @@ footer{
     margin-top:40px;
 }
 
+
+/* Education Grid */
+.edu-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 per row */
+    gap: 20px;
+}
+
+/* Education Card */
+.edu-card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+/* Hover effect like skills */
+.edu-card:hover{
+    background:#38bdf8;
+    color:black;
+}
 .home-img img{
     width:280px;
     height: 280px;
@@ -165,4 +186,10 @@ footer{
     object-fit: cover;       /* Prevents stretching */
     border: 6px solid #00bfff;
     transition: opacity 0.5s ease-in-out;
+}
+
+@media (max-width: 768px){
+    .edu-grid{
+        grid-template-columns: 1fr; /* 1 per row on mobile */
+    }
 }
