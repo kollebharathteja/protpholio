@@ -173,6 +173,7 @@ footer{
     background:#38bdf8;
     color:black;
 }
+
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr; /* two columns per row */
@@ -196,8 +197,6 @@ footer{
   box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
   transform: scale(1.03);
 }
-
-
 
 .home-img img{
     width:280px;
