@@ -218,3 +218,13 @@ footer{
         grid-template-columns: 1fr; /* 1 per row on mobile */
     }
 }
+.profile-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.profile-img:hover {
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.9);
+  transform: scale(1.05);
+}
