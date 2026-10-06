@@ -19,7 +19,7 @@ function typeEffect() {
 
         if (charIndex === currentWord.length) {
             isDeleting = true;
-            setTimeout(typeEffect, 1000); // pause after full word
+            setTimeout(typeEffect, 1000);
             return;
         }
     } else {
@@ -38,44 +38,63 @@ typeEffect();
 
 
 // ===============================
-// Auto Image Slider (every 10  s  econds)
+// Auto Image Slider (every 10 seconds)
 // ===============================
-const images = [
+const allImages = [
     "images/photo1.jpg",
-    "images/photo2.png",
-    "images/photo3.png",
-    "images/photo4.png"
+    "images/photo2.jpg",
+    "images/photo3.jpg",
+    "images/photo4.jpg"
 ];
 
-let imgIndex = 0;
-
-// Your <img> has class="profile-img" (no id), so select by class
 const profileImage = document.querySelector(".profile-img");
 
-if (profileImage) {
+// Check one image: resolves true if it loads, false if not
+function canLoad(src) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => {
+            console.warn("Slider image NOT found:", src);
+            resolve(false);
+        };
+        img.src = src;
+    });
+}
+
+async function startSlider() {
+    if (!profileImage) {
+        console.warn("Slider: no element with class 'profile-img' found.");
+        return;
+    }
+
+    // Keep only the images that actually load
+    const results = await Promise.all(allImages.map(canLoad));
+    const images = allImages.filter((_, i) => results[i]);
+
+    console.log("Slider images that loaded:", images);
+
+    if (images.length < 2) {
+        console.warn("Slider needs at least 2 working images.");
+        return;
+    }
+
+    let index = 0;
+    profileImage.src = images[0];
+
     setInterval(() => {
-        const nextIndex = (imgIndex + 1) % images.length;
-        const nextSrc = images[nextIndex];
+        index = (index + 1) % images.length;
 
-        // Preload first, so a missing image never shows as broken
-        const preload = new Image();
-        preload.onload = () => {
-            profileImage.style.transition = "opacity 0.5s ease-in-out";
-            profileImage.style.opacity = 0;
+        profileImage.style.transition = "opacity 0.5s ease-in-out";
+        profileImage.style.opacity = 0;
 
-            setTimeout(() => {
-                profileImage.src = nextSrc;
-                profileImage.style.opacity = 1;
-                imgIndex = nextIndex;
-            }, 500);
-        };
-        preload.onerror = () => {
-            console.warn("Slider image not found:", nextSrc);
-            imgIndex = nextIndex; // skip this one next time
-        };
-        preload.src = nextSrc;
+        setTimeout(() => {
+            profileImage.src = images[index];
+            profileImage.style.opacity = 1;
+        }, 500);
     }, 10000);
 }
+startSlider();
 
 
 // ===============================
@@ -94,7 +113,6 @@ function updateActiveLink() {
         }
     });
 
-    // At the very bottom of the page, highlight the last section (Contact)
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
         current = "contact";
     }
