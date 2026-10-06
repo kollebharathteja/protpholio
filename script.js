@@ -41,7 +41,7 @@ typeEffect();
 // Auto Image Slider (every 10  s  econds)
 // ===============================
 const images = [
-    "images/photo1.png",
+    "images/photo1.jpg",
     "images/photo2.png",
     "images/photo3.png",
     "images/photo4.png"
